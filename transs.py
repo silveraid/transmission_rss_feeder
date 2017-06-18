@@ -66,7 +66,7 @@ def parse_args():
     parser.add_argument('-a', '--age', required=False, default=1800,
         type=int, help='Maximum age of a torrent (default: %(default)s)')
 
-    parser.add_argument('-f', '--feed', required=True, default='transmission',
+    parser.add_argument('-f', '--feed', required=True,
         type=str, help='RSS Feed URL')
 
     parser.add_argument('--paused', required=False, action='store_true',
@@ -104,7 +104,10 @@ def load_text(fn):
 # the link to the end of the db text file
 def add_torrent(tc, item, is_paused):
     # Log
-    logging.info("Adding Torrent: " + item.title + " (" + item.link + ")")
+    if verbose:
+        logging.info("Adding Torrent: " + item.title + " (" + item.link + ")")
+    else:
+        logging.info("Adding Torrent: " + item.title)
 
     # Adding the torrent file to transmission
     tc.add_torrent(item.link, paused=is_paused)
@@ -180,7 +183,7 @@ def main():
         for f in filters:
             if verbose:
                 logging.info(" + %s", f)
-            compiled_filters.append(re.compile(f))
+            compiled_filters.append(re.compile(f, re.IGNORECASE))
 
     # Log
     logging.info("%d filters have been loaded ...", len(filters))
