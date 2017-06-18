@@ -1,3 +1,7 @@
+# No text or log files
+*.txt
+*.log
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
