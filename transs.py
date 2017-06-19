@@ -133,7 +133,7 @@ def main():
         verbose = False
 
     # Print
-    print "Transmission RSS feeder v0.01"
+    print "Transmission RSS Feeder v0.02"
     print ""
 
     # Configure logging
@@ -186,7 +186,7 @@ def main():
             compiled_filters.append(re.compile(f, re.IGNORECASE))
 
     # Log
-    logging.info("%d filters have been loaded ...", len(filters))
+    logging.info("%d filters have been loaded ...", len(compiled_filters))
 
     #
     #
@@ -238,10 +238,11 @@ def main():
                     okay = True
                     break
 
-        if not okay:
-            if verbose:
-                logging.info("Ignoring torrent: " + item.title + ", filtered out!")
-            filtered += 1
+            # Log a line if it is filtered out
+            if not okay:
+                if verbose:
+                    logging.info("Ignoring torrent: " + item.title + ", filtered out!")
+                filtered += 1
 
         # In case there is no filter adding all files
         else:
